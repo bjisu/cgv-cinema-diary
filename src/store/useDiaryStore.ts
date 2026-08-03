@@ -140,8 +140,3 @@ export const useDiaryStore = create<DiaryState>()(
     },
   ),
 );
-
-/** SSR/hydration 불일치 방지용 — persist rehydrate 완료 여부 */
-export function useHydrated(): boolean {
-  return useDiaryStore.persist?.hasHydrated?.() ?? true;
-}
