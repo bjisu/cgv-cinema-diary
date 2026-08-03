@@ -13,10 +13,14 @@
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.460.0",
-    "next": "14.2.33",
+    "next": "16.2.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.1"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.4",
@@ -24,9 +28,9 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.25",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.5"
+    "vitest": "^4.1.10"
   }
 }
