@@ -1,16 +1,7 @@
-# CGV 시네마 다이어리 — 커서(Cursor) 개발 시작 가이드
+# CGV 시네마 다이어리
 
-파코니 NFC 굿즈 × CGV 앱 '시네마 다이어리' 프로토타입 개발용 스타터 패키지입니다.
-**개발 문서는 이미 다 준비되어 있고, 커서에게 시키기만 하면 됩니다.**
-
-## 이 폴더에 들어있는 것
-
-| 파일 | 역할 |
-|---|---|
-| `docs/PRD.md` | 제품 요구사항 문서 v1.1 — 화면 8종 명세, 디자인 토큰, 데이터 모델 전부 포함 |
-| `.cursorrules` | 커서가 자동으로 읽는 프로젝트 규칙 — 기술 스택·디자인 원칙 고정 |
-| `design-reference/more-screen.png` | 실제 CGV 앱 '더보기' 화면 — 디자인 1:1 재현 기준 |
-| `docs/CURSOR_START_PROMPT.md` | 커서에 붙여넣을 첫 프롬프트 (복사용) |
+파코니 NFC 굿즈 × CGV 앱 '시네마 다이어리' 고충실도 프로토타입입니다.
+`docs/PRD.md` v1.1 기준으로 화면 11종이 모두 구현되어 있습니다.
 
 ## 로컬에서 실행하기
 
@@ -24,7 +15,7 @@ npm run dev
 ```
 
 ### 3단계. 화면 확인
-- 브라우저에서 `http://localhost:3000` 접속
+- 브라우저에서 `http://localhost:3000` 접속 → **더보기 화면**이 바로 뜹니다
 - 개발자 도구(F12) → 기기 모드에서 iPhone(375px)로 보면 실제 앱처럼 확인 가능
 
 ### 그 외 명령어
@@ -34,30 +25,35 @@ npm run dev
 | `npm start` | 빌드 결과 실행 |
 | `npm test` | 레벨·뱃지 판정 로직 단위 테스트 (vitest) |
 
-## 화면 둘러보기
+## 데모 순서 (추천)
+
+`/` 더보기 → **시네마 다이어리** → 영화표로 기록하기 → **CGV 예매내역 불러오기** → 저장
+→ 레벨업 연출 → 씨네톡에 공유
+
+- 시연용 관람 기록 2건이 미리 들어 있어, 3편째를 저장하면 Lv.2 레벨업 연출이 뜹니다.
+- 초기화하려면 더보기 화면 맨 아래 **데모 데이터 초기화**를 누르세요 (FR-13).
+
+## 화면 목록
 
 | 경로 | 화면 |
 |---|---|
-| `/` | 첫 방문 온보딩 스플래시 (FR-14) |
-| `/nfc` | 파코니 굿즈 NFC 태그 시뮬레이션 (FR-01) |
-| `/more` | 더보기 — 실제 앱 스크린샷 1:1 재현, 시네마 다이어리 진입점 |
+| `/` · `/more` | **앱 첫 화면 = 더보기.** 스크린샷 1:1 재현, 시네마 다이어리 진입점 (FR-11, 12) |
 | `/diary` | 시네마 다이어리 홈 (FR-02) |
-| `/diary/verify` | 영화표 인증 3가지 방법 (FR-03, 04) |
+| `/diary/verify` | 영화표 인증 3가지 방법 + 스캔 연출 (FR-03, 04) |
 | `/diary/verify/result` | 자동 기입 결과 · 수정 · 저장 (FR-05, 06) |
 | `/diary/levelup` | 파코니 레벨업 연출 (FR-07) |
 | `/diary/badges` | 장르 취향 뱃지 (FR-08) |
 | `/diary/archive` | 마이 무비 다이어리 (FR-09) |
 | `/diary/share` | 씨네톡 공유 (FR-10) |
+| `/nfc` | 파코니 굿즈 NFC 태그 시뮬레이션 (FR-01) — 매점 탭 굿즈 카드에서 진입 |
+| `/onboarding` | 굿즈 태그 유도 온보딩 (FR-14) — 매점 굿즈 안내에서 진입 |
 | `/home` `/cinetalk` `/booking` `/store` | CGV 앱 목업 탭 (FR-11) |
 
-> 데이터는 전부 브라우저 localStorage(`cgv-cinema-diary`)에 저장됩니다. 서버·로그인 없음.
-> 초기화하려면 더보기 화면 맨 아래 **데모 데이터 초기화**를 누르세요 (FR-13).
+> 데이터는 전부 브라우저 localStorage(`cgv-cinema-diary`)에 저장됩니다. 서버·로그인·외부 DB 없음.
 
-## 배포 (Vercel)
+## 기술 스택
 
-1. [vercel.com](https://vercel.com) → **Add New > Project** → 이 GitHub 저장소 Import → **Deploy**
-   (환경변수 설정 불필요 — 그냥 Deploy 버튼만 누르면 됩니다)
-2. 이후 `main` 브랜치에 push 할 때마다 자동으로 재배포됩니다
+Next.js 14 (App Router) · TypeScript · Tailwind CSS · Zustand(persist) · Framer Motion · lucide-react · Pretendard
 
 ## 프로젝트 구조
 
@@ -67,14 +63,20 @@ src/
 ├─ components/
 │  ├─ layout/            # MobileContainer, AppHeader, BottomTab, Hydrated
 │  ├─ ui/                # PrimaryButton, GrayCard, GradeBar, BottomSheet, Toast, Poster
+│  ├─ screens/           # MoreScreen (`/` 와 `/more` 가 공유)
 │  └─ diary/             # PaconiCharacter (SVG 직접 제작)
 ├─ store/                # useDiaryStore (zustand + persist), useDraftStore
 ├─ data/                 # movies, bookings, cinetalk, levels, badges
 ├─ lib/                  # progression.ts (레벨·뱃지 판정), format.ts
 └─ types/
+
+docs/PRD.md              # 단일 기준 문서
+.cursorrules             # 프로젝트 규칙 (기술 스택·디자인 원칙)
+design-reference/        # 실제 CGV 앱 더보기 화면 스크린샷
 ```
 
-## 문제가 생기면
+## 배포 (Vercel)
 
-커서 채팅에 에러 메시지를 그대로 붙여넣고 "고쳐줘"라고 하면 됩니다.
-`.cursorrules`에 "에러는 스스로 진단·수정 후 한 문장으로 보고"하도록 설정되어 있습니다.
+1. [vercel.com](https://vercel.com) → **Add New > Project** → 이 GitHub 저장소 Import → **Deploy**
+   (환경변수 설정 불필요 — 그냥 Deploy 버튼만 누르면 됩니다)
+2. 이후 `main` 브랜치에 push 할 때마다 자동으로 재배포됩니다

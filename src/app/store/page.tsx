@@ -72,6 +72,13 @@ export default function StorePage() {
           </p>
           <div className="mt-6">
             <PrimaryButton onClick={() => router.push("/nfc")}>태그 시뮬레이션 해보기</PrimaryButton>
+            <button
+              type="button"
+              onClick={() => router.push("/onboarding")}
+              className="mt-3 h-11 w-full text-sub text-cgv-gray-600 underline underline-offset-2"
+            >
+              굿즈 안내 온보딩 다시 보기
+            </button>
           </div>
         </div>
       </BottomSheet>
