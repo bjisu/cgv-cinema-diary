@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <MobileContainer>
       <div className="pb-tabbar">
-        <div className="flex h-[52px] items-center px-3">
+        <div className="flex h-[64px] items-center px-3 pt-3">
           <span className="pl-2 text-h1 font-bold text-cgv-black">CGV</span>
           <div className="ml-auto flex items-center">
             {[Ticket, Bell, Search].map((Icon, i) => (

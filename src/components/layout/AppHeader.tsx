@@ -22,7 +22,8 @@ export default function AppHeader({
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-30 flex h-[52px] items-center gap-1 bg-cgv-white px-2">
+    // pt-3: 상단 여백 (더보기 화면은 이 헤더를 쓰지 않으므로 영향 없음)
+    <header className="sticky top-0 z-30 flex h-[64px] items-center gap-1 bg-cgv-white px-2 pt-3">
       {showBack && (
         <button
           type="button"
