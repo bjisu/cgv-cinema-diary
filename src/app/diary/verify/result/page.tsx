@@ -80,7 +80,7 @@ export default function VerifyResultPage() {
     const entry = addEntry({
       movieId: form.movieId,
       title: movie?.title ?? "",
-      posterUrl: form.movieId,
+      posterUrl: movie?.posterUrl ?? "",
       watchedAt,
       theater: form.theater.trim() || "용산아이파크몰",
       screen: form.screen.trim() || "1관",
@@ -134,7 +134,7 @@ export default function VerifyResultPage() {
             >
               {movie ? (
                 <>
-                  <Poster movieId={movie.id} size="sm" className="h-[40px] w-[28px] shrink-0" />
+                  <Poster movieId={movie.id} sizes="28px" className="w-[28px] shrink-0" />
                   <span className="flex-1 truncate text-body text-cgv-black">{movie.title}</span>
                 </>
               ) : (
@@ -243,7 +243,7 @@ export default function VerifyResultPage() {
                 }}
                 className="flex w-full items-center gap-3 rounded-btn p-2 text-left"
               >
-                <Poster movieId={m.id} size="sm" className="h-[56px] w-[38px] shrink-0" />
+                <Poster movieId={m.id} sizes="38px" className="w-[38px] shrink-0" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-body font-bold text-cgv-black">
                     {m.title}

@@ -91,7 +91,7 @@ export default function DiaryHomePage() {
                 {sorted.slice(0, 3).map((e) => (
                   <li key={e.id}>
                     <Link href="/diary/archive" className="flex items-center gap-3">
-                      <Poster movieId={e.movieId} size="sm" className="h-[68px] w-[48px] shrink-0" />
+                      <Poster movieId={e.movieId} sizes="48px" className="w-[48px] shrink-0" />
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-body font-bold text-cgv-black">{e.title}</p>
                         <p className="mt-1 text-sub text-cgv-gray-600">

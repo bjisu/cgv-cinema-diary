@@ -115,7 +115,7 @@ export default function ArchivePage() {
                     className="w-full text-left"
                     aria-label={`${e.title} 기록 상세`}
                   >
-                    <Poster movieId={e.movieId} size="md" />
+                    <Poster movieId={e.movieId} sizes="140px" />
                     <p className="mt-1.5 text-center text-caption text-cgv-gray-600">
                       {formatStamp(e.watchedAt)}
                     </p>
@@ -132,7 +132,7 @@ export default function ArchivePage() {
         {selected && (
           <div className="pb-2">
             <div className="flex gap-4">
-              <Poster movieId={selected.movieId} size="lg" className="w-[92px] shrink-0" />
+              <Poster movieId={selected.movieId} sizes="92px" className="w-[92px] shrink-0" />
               <dl className="flex-1 text-sub">
                 <p className="text-h2 font-bold text-cgv-black">{selected.title}</p>
                 <div className="mt-3 flex flex-col gap-1.5 text-cgv-gray-600">

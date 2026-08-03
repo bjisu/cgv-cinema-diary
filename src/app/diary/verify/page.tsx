@@ -150,7 +150,7 @@ export default function VerifyPage() {
                     router.push("/diary/verify/result");
                   }}
                 >
-                  <Poster movieId={b.movieId} size="sm" className="h-[68px] w-[48px] shrink-0" />
+                  <Poster movieId={b.movieId} sizes="48px" className="w-[48px] shrink-0" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-body font-bold text-cgv-black">{movie?.title}</p>
                     <p className="mt-1 text-sub text-cgv-gray-600">{formatWatchedAt(b.watchedAt)}</p>

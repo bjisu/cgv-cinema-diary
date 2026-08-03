@@ -49,7 +49,7 @@ export default function HomePage() {
           <ul className="no-scrollbar mt-4 flex gap-3 overflow-x-auto px-5">
             {MOVIES.slice(0, 8).map((m, i) => (
               <li key={m.id} className="w-[112px] shrink-0">
-                <Poster movieId={m.id} size="md" />
+                <Poster movieId={m.id} sizes="112px" />
                 <p className="mt-2 truncate text-sub font-bold text-cgv-black">
                   {i + 1}. {m.title}
                 </p>

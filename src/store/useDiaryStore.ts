@@ -35,15 +35,15 @@ export interface DiaryState {
 function seedEntries(): DiaryEntry[] {
   const base: Array<Pick<DiaryEntry, "movieId" | "watchedAt" | "theater" | "screen" | "seat">> = [
     {
-      movieId: "m03",
-      watchedAt: "2026-07-18T19:20",
+      movieId: "m08", // 패신저
+      watchedAt: "2026-07-31T19:20",
       theater: "용산아이파크몰",
       screen: "5관",
       seat: "H12",
     },
     {
-      movieId: "m06",
-      watchedAt: "2026-07-05T16:40",
+      movieId: "m01", // 스파이더맨: 브랜드 뉴 데이
+      watchedAt: "2026-07-24T16:40",
       theater: "왕십리",
       screen: "2관",
       seat: "D07",
@@ -56,7 +56,7 @@ function seedEntries(): DiaryEntry[] {
       ...b,
       id: `seed-${i + 1}`,
       title: movie.title,
-      posterUrl: movie.id,
+      posterUrl: movie.posterUrl,
       genre: movie.genre,
       source: "booking" as const,
       createdAt: b.watchedAt,

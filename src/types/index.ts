@@ -27,21 +27,16 @@ export interface DiaryEntry {
   createdAt: string;
 }
 
-/** 목데이터 영화 (실제 영화 사용 금지 — 가상 제목) */
+/** 영화 목데이터 — TMDB Now Playing(KR) 기반 실제 상영작 (데모 용도) */
 export interface Movie {
   id: string;
+  /** TMDB 영화 id (포스터 파일명과 동일) */
+  tmdbId: number;
   title: string;
   genre: Genre;
   runtime: number; // 분
-  poster: PosterStyle;
-}
-
-/** 저작권 이슈 회피 — 포스터는 CSS 그라데이션 + 타이틀 텍스트로 생성 */
-export interface PosterStyle {
-  from: string;
-  to: string;
-  /** 포스터 위 장식 텍스트 (영문 카피) */
-  tagline: string;
+  /** public/posters/ 아래 로컬 포스터 경로 */
+  posterUrl: string;
 }
 
 /** CGV 예매내역 목데이터 */

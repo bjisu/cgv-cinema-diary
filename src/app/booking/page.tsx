@@ -34,7 +34,7 @@ export default function BookingPage() {
         <ul className="mt-6 flex flex-col gap-4 px-5">
           {MOVIES.slice(0, 6).map((m) => (
             <li key={m.id} className="flex items-center gap-3">
-              <Poster movieId={m.id} size="sm" className="h-[84px] w-[58px] shrink-0" />
+              <Poster movieId={m.id} sizes="58px" className="w-[58px] shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-body font-bold text-cgv-black">{m.title}</p>
                 <p className="mt-1 text-sub text-cgv-gray-600">

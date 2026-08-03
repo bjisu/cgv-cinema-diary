@@ -4,24 +4,24 @@ import type { Booking } from "@/types";
 export const BOOKINGS: Booking[] = [
   {
     id: "b01",
-    movieId: "m02",
-    watchedAt: "2026-08-01T20:10",
+    movieId: "m03", // 슈퍼걸
+    watchedAt: "2026-08-02T20:10",
     theater: "용산아이파크몰",
     screen: "IMAX관",
     seat: "F09",
   },
   {
     id: "b02",
-    movieId: "m05",
-    watchedAt: "2026-07-26T14:30",
+    movieId: "m05", // 미니언즈 & 몬스터즈
+    watchedAt: "2026-07-27T14:30",
     theater: "왕십리",
     screen: "3관",
     seat: "C11",
   },
   {
     id: "b03",
-    movieId: "m09",
-    watchedAt: "2026-07-19T21:40",
+    movieId: "m10", // 레디 오어 낫: 죽음의 숨바꼭질
+    watchedAt: "2026-07-22T21:40",
     theater: "영등포",
     screen: "7관",
     seat: "J14",

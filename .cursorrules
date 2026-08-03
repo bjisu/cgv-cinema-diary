@@ -23,7 +23,8 @@
 
 ## 3. 구현 원칙
 - 이것은 고충실도 프로토타입이다: 실패 케이스(인식 실패, 네트워크 오류)를 만들지 않는다. NFC·OCR은 모두 시뮬레이션 연출.
-- 실제 영화 제목·포스터·파코니 원본 이미지 사용 금지(저작권). 가상 영화 목데이터 + 직접 제작한 SVG/CSS 에셋 사용.
+- 영화 목데이터는 **TMDB 기반 실제 상영작 데이터를 사용한다(데모 용도)**. `scripts/fetch-movies.mjs` 로 TMDB Now Playing(region=KR)에서 12편과 포스터를 받아 `src/data/movies.ts` + `public/posters/` 를 생성한다. 이 파일은 직접 수정하지 말고 스크립트를 재실행해 갱신한다. TMDB 토큰은 실행 시 환경변수(`TMDB_TOKEN`)로만 주입하고 저장소에 커밋하지 않는다.
+- 뱃지 이미지는 `design-reference/badge.png` 에서 잘라낸 `public/badges/` 에셋을 사용한다. 파코니 캐릭터는 원본 이미지 대신 직접 제작한 SVG 를 쓴다.
 - 레벨·뱃지 판정은 `lib/progression.ts` 순수 함수로 분리하고 vitest 단위 테스트 작성.
 - localStorage 파싱 실패 시 앱이 죽지 않고 시드 데이터로 복구되게 한다.
 - 커밋 메시지·코드 주석에 PRD의 FR 번호를 참조한다 (예: `feat: FR-04 자동 기입 연출`).
