@@ -1,20 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Drama,
-  Eye,
-  Flame,
-  Ghost,
-  Heart,
-  Laugh,
-  Lock,
-  Rocket,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useMemo } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { getBadge } from "@/data/badges";
+import BadgeImage from "@/components/diary/BadgeImage";
 import AppHeader from "@/components/layout/AppHeader";
 import BottomTab from "@/components/layout/BottomTab";
 import Hydrated from "@/components/layout/Hydrated";
@@ -23,18 +13,7 @@ import { BADGES, GENRES } from "@/data/badges";
 import { formatDate } from "@/lib/format";
 import { getEarnedBadgeIds, getGenreCounts } from "@/lib/progression";
 import { useDiaryStore } from "@/store/useDiaryStore";
-import type { BadgeRule, DiaryEntry, Genre } from "@/types";
-
-const GENRE_ICON: Record<Genre, LucideIcon> = {
-  액션: Flame,
-  드라마: Drama,
-  SF: Rocket,
-  코미디: Laugh,
-  로맨스: Heart,
-  스릴러: Eye,
-  애니메이션: Sparkles,
-  공포: Ghost,
-};
+import type { BadgeRule, DiaryEntry } from "@/types";
 
 /** PRD §8 화면 06 — 장르 취향 뱃지 (FR-08) */
 export default function BadgesPage() {
@@ -54,6 +33,15 @@ function BadgesContent() {
   const earned = useMemo(() => new Set(getEarnedBadgeIds(entries)), [entries]);
   const counts = useMemo(() => getGenreCounts(entries), [entries]);
   const max = counts[0]?.count ?? 0;
+
+  // ?new={id} 진입 시 획득 연출 후 그리드 표시 (FR-08)
+  const newBadge = newBadgeId ? getBadge(newBadgeId) : undefined;
+  const [celebrating, setCelebrating] = useState(!!newBadge);
+  useEffect(() => {
+    if (!newBadge) return;
+    const t = setTimeout(() => setCelebrating(false), 2400);
+    return () => clearTimeout(t);
+  }, [newBadge]);
 
   return (
     <MobileContainer>
@@ -118,6 +106,56 @@ function BadgesContent() {
         </Hydrated>
       </div>
 
+      {/* 새 뱃지 획득 연출 */}
+      <AnimatePresence>
+        {celebrating && newBadge && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setCelebrating(false)}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/70 px-10"
+          >
+            <motion.div
+              initial={{ scale: 0.4, opacity: 0 }}
+              animate={{ scale: [0.4, 1.18, 1], opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-[220px]"
+            >
+              <motion.span
+                animate={{ opacity: [0.85, 0.2, 0.85], scale: [1, 1.25, 1] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 rounded-full bg-cgv-gold blur-[24px]"
+                aria-hidden
+              />
+              <BadgeImage
+                genre={newBadge.genre}
+                tier={newBadge.tier}
+                unlocked
+                showTierChip={false}
+              />
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-7 text-[22px] font-bold text-cgv-white"
+            >
+              새 뱃지 획득! 🎉
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-2 text-body text-cgv-gold"
+            >
+              {newBadge.name}
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <BottomTab active="more" />
     </MobileContainer>
   );
@@ -134,8 +172,6 @@ function BadgeCell({
   isNew: boolean;
   entries: DiaryEntry[];
 }) {
-  const Icon = GENRE_ICON[badge.genre];
-
   // 획득일 = 해당 장르 N번째 관람일
   const earnedAt = useMemo(() => {
     if (!unlocked) return null;
@@ -151,24 +187,19 @@ function BadgeCell({
         initial={isNew ? { scale: 0.5, opacity: 0 } : false}
         animate={isNew ? { scale: [0.5, 1.2, 1], opacity: 1 } : {}}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className={`relative flex h-[72px] w-[72px] items-center justify-center rounded-full ${
-          unlocked ? "bg-cgv-gray-100" : "bg-cgv-gray-100/60"
-        } ${isNew ? "ring-2 ring-cgv-gold" : ""}`}
+        className="relative w-full"
       >
-        {unlocked ? (
-          <Icon
-            size={30}
-            strokeWidth={1.8}
-            className={badge.tier === "master" ? "text-cgv-gold" : "text-cgv-red"}
+        {/* 새 뱃지 획득 광채 */}
+        {isNew && (
+          <motion.span
+            initial={{ opacity: 0.9, scale: 1 }}
+            animate={{ opacity: [0.9, 0, 0.9], scale: [1, 1.35, 1] }}
+            transition={{ duration: 1.6, repeat: 2, ease: "easeOut" }}
+            className="absolute inset-0 rounded-full bg-cgv-gold blur-[10px]"
+            aria-hidden
           />
-        ) : (
-          <>
-            <Icon size={30} strokeWidth={1.8} className="text-cgv-gray-400 opacity-40" />
-            <span className="absolute -bottom-0.5 -right-0.5 flex h-6 w-6 items-center justify-center rounded-full border-2 border-cgv-white bg-cgv-gray-400">
-              <Lock size={11} strokeWidth={2.4} className="text-cgv-white" />
-            </span>
-          </>
         )}
+        <BadgeImage genre={badge.genre} tier={badge.tier} unlocked={unlocked} />
       </motion.div>
 
       <p
