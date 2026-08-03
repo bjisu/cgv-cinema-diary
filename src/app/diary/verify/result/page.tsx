@@ -14,6 +14,13 @@ import { GENRES } from "@/data/badges";
 import { MOVIES, getMovie } from "@/data/movies";
 import { fromDateTimeInput } from "@/lib/format";
 import { getLevel, getNewlyUnlockedBadges } from "@/lib/progression";
+import {
+  CLOSE_TIME,
+  OPEN_TIME,
+  isFutureDate,
+  isWithinOperatingHours,
+  todayInputValue,
+} from "@/lib/theater";
 import { useDiaryStore } from "@/store/useDiaryStore";
 import { emptyDraft, useDraftStore } from "@/store/useDraftStore";
 import type { Genre } from "@/types";
@@ -68,11 +75,21 @@ export default function VerifyResultPage() {
     [query],
   );
 
+  const maxDate = todayInputValue();
   const canSave = !!form.movieId && !!form.date && !!form.genre;
 
   const handleSave = () => {
     if (!canSave) {
       showToast("영화와 관람일시를 입력해 주세요");
+      return;
+    }
+    // 미래 날짜·운영 시간 외 관람은 기록할 수 없다
+    if (isFutureDate(form.date)) {
+      showToast("아직 보지 않은 날짜예요. 오늘까지만 기록할 수 있어요");
+      return;
+    }
+    if (!isWithinOperatingHours(form.time)) {
+      showToast(`상영 시간은 ${OPEN_TIME}~${CLOSE_TIME} 사이로 입력해 주세요`);
       return;
     }
 
@@ -149,16 +166,36 @@ export default function VerifyResultPage() {
               <input
                 type="date"
                 value={form.date}
-                onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
+                max={maxDate}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (isFutureDate(v)) return; // 미래 날짜 선택 차단
+                  setForm((f) => ({ ...f, date: v }));
+                }}
                 className="h-[52px] flex-1 rounded-btn border border-black/10 px-3 text-body text-cgv-black"
               />
               <input
                 type="time"
                 value={form.time}
+                min={OPEN_TIME}
+                max={CLOSE_TIME}
                 onChange={(e) => setForm((f) => ({ ...f, time: e.target.value }))}
-                className="h-[52px] w-[120px] rounded-btn border border-black/10 px-3 text-body text-cgv-black"
+                className={`h-[52px] w-[120px] rounded-btn border px-3 text-body text-cgv-black ${
+                  form.time && !isWithinOperatingHours(form.time)
+                    ? "border-cgv-red"
+                    : "border-black/10"
+                }`}
               />
             </div>
+            <p
+              className={`mt-1.5 text-sub ${
+                form.time && !isWithinOperatingHours(form.time)
+                  ? "text-cgv-red"
+                  : "text-cgv-gray-400"
+              }`}
+            >
+              오늘까지의 날짜만, 상영 시간은 {OPEN_TIME}~{CLOSE_TIME} 사이로 입력할 수 있어요
+            </p>
           </Field>
 
           <Field label="극장" highlight={filledStep === 3}>

@@ -31,13 +31,16 @@ export default function BottomSheet({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute inset-x-0 bottom-0 mx-auto max-h-[80vh] w-full max-w-mobile overflow-y-auto rounded-t-sheet bg-cgv-white pb-[calc(20px+env(safe-area-inset-bottom))]"
+            className="absolute inset-x-0 bottom-0 mx-auto flex max-h-[80vh] w-full max-w-mobile flex-col overflow-hidden rounded-t-sheet bg-cgv-white"
           >
-            <div className="sticky top-0 bg-cgv-white pt-2.5">
+            {/* 핸들바 + 타이틀은 고정, 스크롤은 그 아래 영역에서만 일어난다 */}
+            <div className="shrink-0 bg-cgv-white pt-2.5">
               <div className="mx-auto h-1 w-9 rounded-full bg-[#D9D9D9]" />
               {title && <h2 className="px-5 pb-2 pt-4 text-h2 font-bold text-cgv-black">{title}</h2>}
             </div>
-            <div className="px-5">{children}</div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-[calc(20px+env(safe-area-inset-bottom))]">
+              {children}
+            </div>
           </motion.div>
         </div>
       )}
