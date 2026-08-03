@@ -42,6 +42,28 @@ function TabIcon({ tab }: { tab: TabKey }) {
   return <MoreIcon />;
 }
 
+function TabItem({
+  tab,
+  active,
+}: {
+  tab: { key: TabKey; label: string; href: string };
+  active: boolean;
+}) {
+  return (
+    <li className="flex-1">
+      <Link
+        href={tab.href}
+        className="flex h-full flex-col items-center justify-center gap-[3px]"
+      >
+        <TabIcon tab={tab.key} />
+        <span className={`text-caption text-cgv-black ${active ? "font-bold" : "font-normal"}`}>
+          {tab.label}
+        </span>
+      </Link>
+    </li>
+  );
+}
+
 /**
  * PRD §7.3 / FR-11 — 하단 탭바.
  * 탭 4개 + 중앙 '예매·예약' 빨간 FAB(지름 72px, 탭바 위로 절반 돌출).
@@ -66,25 +88,14 @@ export default function BottomTab({ active }: { active?: TabKey | "booking" }) {
         </button>
 
         <div className="border-t border-black/5 bg-[#F7F7F7] pb-[env(safe-area-inset-bottom)]">
-          <ul className="flex h-[64px] items-center">
-            {TABS.map((tab, i) => (
-              <li key={tab.key} className="flex flex-1 justify-center">
-                {/* 중앙 FAB 자리 확보 */}
-                {i === 2 && <span className="w-[72px] shrink-0" aria-hidden />}
-                <Link
-                  href={tab.href}
-                  className="flex h-[64px] flex-1 flex-col items-center justify-center gap-[3px]"
-                >
-                  <TabIcon tab={tab.key} />
-                  <span
-                    className={`text-caption text-cgv-black ${
-                      current === tab.key ? "font-bold" : "font-normal"
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
-                </Link>
-              </li>
+          <ul className="flex h-[64px] items-stretch">
+            {TABS.slice(0, 2).map((tab) => (
+              <TabItem key={tab.key} tab={tab} active={current === tab.key} />
+            ))}
+            {/* 중앙 FAB 자리 확보 */}
+            <li className="w-[80px] shrink-0" aria-hidden />
+            {TABS.slice(2).map((tab) => (
+              <TabItem key={tab.key} tab={tab} active={current === tab.key} />
             ))}
           </ul>
         </div>

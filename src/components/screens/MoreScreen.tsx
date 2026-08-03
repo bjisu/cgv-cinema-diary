@@ -104,7 +104,7 @@ export default function MoreScreen() {
         {/* 5~6. 나의 정보 관리 — TextMenuGrid 2열 */}
         <section className="px-5 pt-8">
           <h2 className="text-body text-cgv-gray-600">나의 정보 관리</h2>
-          <ul className="mt-5 grid grid-cols-2 gap-y-[26px]">
+          <ul className="mt-5 grid grid-cols-2 gap-y-[18px]">
             <li>
               {/* ★ 유일한 텍스트 교체: '내가 본 영화' → '시네마 다이어리' */}
               <Link href="/diary" className="relative inline-flex items-start">
