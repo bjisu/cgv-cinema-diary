@@ -1,0 +1,55 @@
+import type { CinetalkPost } from "@/types";
+
+/** PRD §5.3 — 씨네톡 피드 목데이터 5건 */
+export const CINETALK_POSTS: CinetalkPost[] = [
+  {
+    id: "c01",
+    author: "팝콘러버2024",
+    avatarColor: "#FF7553",
+    body: "파코니 Lv.6 찍었다! 올해만 41편 봤네요 🍿 다들 어디까지 오셨나요?",
+    hashtags: ["#CGV", "#파코니", "#시네마다이어리"],
+    likes: 312,
+    comments: 48,
+    createdAt: "2026-08-02T21:14",
+  },
+  {
+    id: "c02",
+    author: "심야극장민지",
+    avatarColor: "#4C6EF5",
+    body: "SF 마스터 뱃지 드디어 획득! 궤도의 아이들 IMAX로 본 게 신의 한 수였음",
+    hashtags: ["#SF마스터", "#시네마다이어리"],
+    likes: 187,
+    comments: 25,
+    createdAt: "2026-08-02T18:02",
+  },
+  {
+    id: "c03",
+    author: "주말은극장에",
+    avatarColor: "#F5C518",
+    body: "굿즈 태그하니까 바로 다이어리 열리는 거 너무 편한데요? 영화표 찍기만 하면 끝",
+    hashtags: ["#파코니NFC", "#CGV"],
+    likes: 96,
+    comments: 12,
+    createdAt: "2026-08-01T22:47",
+  },
+  {
+    id: "c04",
+    author: "로맨스요정",
+    avatarColor: "#BE185D",
+    body: "여름의 온도 보고 나오는 길… 올해 로맨스만 9편째. 뱃지 컬렉션 채우는 재미가 있어요",
+    hashtags: ["#로맨스팬", "#시네마다이어리"],
+    likes: 143,
+    comments: 31,
+    createdAt: "2026-08-01T11:20",
+  },
+  {
+    id: "c05",
+    author: "공포장인",
+    avatarColor: "#7F1D1D",
+    body: "새벽 3시의 손님 심야 관람 성공. 파코니가 같이 무서워하는 표정 짓는 거 귀엽다",
+    hashtags: ["#공포입문", "#CGV"],
+    likes: 64,
+    comments: 9,
+    createdAt: "2026-07-30T02:35",
+  },
+];
