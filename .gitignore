@@ -2,6 +2,9 @@ node_modules/
 .next/
 .next-prod/
 .shot-*.png
+
+# 에디터 임시 메모
+Untitled
 out/
 build/
 .DS_Store
