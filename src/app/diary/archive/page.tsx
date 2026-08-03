@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useMemo, useState } from "react";
 import PaconiCharacter from "@/components/diary/PaconiCharacter";
 import AppHeader from "@/components/layout/AppHeader";
@@ -67,18 +68,7 @@ export default function ArchivePage() {
               </p>
               <p className="mt-2 text-body text-cgv-gray-600">{year}년 관람 기록</p>
             </div>
-            <select
-              value={year}
-              onChange={(e) => setYear(Number(e.target.value))}
-              className="h-9 rounded-full border border-black/10 bg-cgv-white px-3 text-sub text-cgv-black"
-              aria-label="연도 선택"
-            >
-              {years.map((y) => (
-                <option key={y} value={y}>
-                  {y}년
-                </option>
-              ))}
-            </select>
+            <YearSelect years={years} value={year} onChange={setYear} />
           </div>
 
           {/* 월 필터 칩 */}
@@ -90,10 +80,10 @@ export default function ArchivePage() {
                   key={m}
                   type="button"
                   onClick={() => setMonth(m as number | "all")}
-                  className={`h-9 shrink-0 rounded-full px-3.5 text-sub ${
+                  className={`h-9 shrink-0 rounded-full px-4 text-[14px] leading-none ${
                     active
                       ? "bg-cgv-black font-bold text-cgv-white"
-                      : "border border-black/10 text-cgv-gray-600"
+                      : "border border-[#D9D9D9] text-cgv-gray-600"
                   }`}
                 >
                   {m === "all" ? "전체" : `${m}월`}
@@ -173,6 +163,71 @@ export default function ArchivePage() {
 
       <BottomTab active="more" />
     </MobileContainer>
+  );
+}
+
+/**
+ * 연도 선택 — native select 는 기본 화살표 때문에 좌우 패딩을 제어할 수 없어
+ * 버튼형 드롭다운으로 직접 구현한다. (pill: 흰 배경 / 1px #D9D9D9 / h-36 / 14px)
+ */
+function YearSelect({
+  years,
+  value,
+  onChange,
+}: {
+  years: number[];
+  value: number;
+  onChange: (y: number) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label="연도 선택"
+        aria-expanded={open}
+        className="flex h-9 items-center gap-1.5 rounded-full border border-[#D9D9D9] bg-cgv-white px-4 text-[14px] leading-none text-cgv-black"
+      >
+        {value}년
+        <ChevronDown
+          size={16}
+          strokeWidth={2}
+          className={`text-cgv-black transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <>
+          <button
+            type="button"
+            aria-hidden
+            tabIndex={-1}
+            onClick={() => setOpen(false)}
+            className="fixed inset-0 z-10 cursor-default"
+          />
+          <ul className="absolute right-0 top-[42px] z-20 min-w-[104px] overflow-hidden rounded-btn border border-[#D9D9D9] bg-cgv-white py-1">
+            {years.map((y) => (
+              <li key={y}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(y);
+                    setOpen(false);
+                  }}
+                  className={`flex h-10 w-full items-center px-4 text-[14px] ${
+                    y === value ? "font-bold text-cgv-black" : "text-cgv-gray-600"
+                  }`}
+                >
+                  {y}년
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
   );
 }
 
