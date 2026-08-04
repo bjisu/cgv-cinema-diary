@@ -11,20 +11,13 @@ export function getLevel(count: number): number {
   return level;
 }
 
-export function getLevelRule(level: number): LevelRule | undefined {
+function getLevelRule(level: number): LevelRule | undefined {
   return LEVELS.find((l) => l.level === level);
-}
-
-/** 현재 칭호 (Lv.0이면 '관람 대기') */
-export function getTitleName(count: number): string {
-  const rule = getLevelRule(getLevel(count));
-  return rule?.titleName ?? "관람 대기";
 }
 
 /** 다음 레벨까지의 진행 정보 — GradeBar 재사용용 */
 export function getLevelProgress(count: number): {
   level: number;
-  titleName: string;
   next?: LevelRule;
   /** 0~1 */
   ratio: number;
@@ -32,17 +25,16 @@ export function getLevelProgress(count: number): {
   remain: number;
 } {
   const level = getLevel(count);
-  const titleName = getTitleName(count);
   const next = LEVELS.find((l) => l.level === level + 1);
 
   if (!next || level >= MAX_LEVEL) {
-    return { level, titleName, ratio: 1, remain: 0 };
+    return { level, ratio: 1, remain: 0 };
   }
 
   const base = getLevelRule(level)?.required ?? 0;
   const span = next.required - base;
   const ratio = span <= 0 ? 1 : Math.min(1, Math.max(0, (count - base) / span));
-  return { level, titleName, next, ratio, remain: Math.max(0, next.required - count) };
+  return { level, next, ratio, remain: Math.max(0, next.required - count) };
 }
 
 /** 장르별 관람 편수 (편수 내림차순) */

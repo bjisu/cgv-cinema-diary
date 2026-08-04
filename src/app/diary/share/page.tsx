@@ -23,20 +23,18 @@ export default function SharePage() {
   const [comment, setComment] = useState("");
 
   const count = entries.length;
-  const { level, titleName } = getLevelProgress(count);
+  const { level } = getLevelProgress(count);
 
   const handlePost = () => {
     addPost({
       author: nickname,
       avatarColor: "#FF2949",
-      body:
-        comment.trim() ||
-        `파코니 Lv.${level} 달성! ${count}편째 관람 · ${titleName}`,
+      body: comment.trim() || `파코니 Lv.${level} 달성! ${count}편째 관람`,
       hashtags: HASHTAGS,
       likes: 0,
       comments: 0,
       mine: true,
-      shareCard: { level, titleName, count },
+      shareCard: { level, count },
     });
     showToast("씨네톡에 게시했어요 🍿");
     router.push("/cinetalk");
@@ -55,9 +53,7 @@ export default function SharePage() {
                 <PaconiCharacter level={level} size={140} />
               </div>
               <p className="mt-3 text-[22px] font-bold text-cgv-black">파코니 Lv.{level} 달성!</p>
-              <p className="mt-1.5 text-body text-cgv-gray-600">
-                {count}편째 관람 · {titleName}
-              </p>
+              <p className="mt-1.5 text-body text-cgv-gray-600">{count}편째 관람</p>
               <p className="mt-4 text-sub text-cgv-red">{HASHTAGS.join(" ")}</p>
             </div>
           </div>

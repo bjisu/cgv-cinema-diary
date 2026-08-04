@@ -37,34 +37,37 @@ export default function DiaryHomePage() {
         <Hydrated fallback={<div className="h-[220px]" />}>
           {/* 히어로 카드 */}
           <div className="px-5 pt-2">
-            <GrayCard>
+            <GrayCard compact>
               <div className="flex items-center gap-4">
-                <PaconiCharacter level={progress.level} size={92} />
+                <PaconiCharacter level={progress.level} size={92} priority />
                 <div className="min-w-0 flex-1">
-                  <p className="text-[22px] font-bold leading-tight text-cgv-black">
-                    파코니 Lv.{progress.level}
+                  <p className="text-h1 text-cgv-black">파코니 Lv.{progress.level}</p>
+                  <p className="mt-1.5 text-[14px] leading-5 text-cgv-gray-600">
+                    {progress.next
+                      ? `다음 레벨까지 ${progress.remain}편 남았어요`
+                      : "최고 레벨 달성!"}
                   </p>
-                  <p className="mt-1 text-body text-cgv-gray-600">{progress.titleName}</p>
                 </div>
               </div>
-              <div className="mt-4">
+
+              <div className="mt-3">
                 <GradeBar
                   pillLabel={`Lv.${progress.level}`}
                   ratio={progress.ratio}
-                  leftLabel={`${entries.length}편`}
-                  rightLabel={
-                    progress.next ? `다음 레벨 ${progress.next.required}편` : "최고 레벨 달성"
-                  }
+                  leftLabel={`Lv.${progress.level}`}
+                  rightLabel={progress.next ? `Lv.${progress.next.level}` : undefined}
                 />
+              </div>
+
+              {/* 관람 통계 — 카드 내부로 편입 (구분선 위) */}
+              <div className="mt-3 border-t border-[#E5E5E5] pt-3">
+                <p className="text-body text-cgv-black">
+                  이번 달 <b className="font-bold">{period.month}</b>편 · 올해{" "}
+                  <b className="font-bold">{period.year}</b>편
+                </p>
               </div>
             </GrayCard>
           </div>
-
-          {/* 통계 라인 */}
-          <p className="px-5 pt-4 text-body text-cgv-black">
-            이번 달 <b className="font-bold">{period.month}편</b> · 올해{" "}
-            <b className="font-bold">{period.year}편</b>
-          </p>
 
           {/* CTA */}
           <div className="px-5 pt-4">

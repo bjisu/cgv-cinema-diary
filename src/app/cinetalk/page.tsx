@@ -53,7 +53,7 @@ export default function CinetalkPage() {
                         파코니 Lv.{post.shareCard.level} 달성!
                       </p>
                       <p className="mt-1 text-sub text-cgv-gray-600">
-                        {post.shareCard.count}편째 관람 · {post.shareCard.titleName}
+                        {post.shareCard.count}편째 관람
                       </p>
                     </div>
                   </div>

@@ -63,7 +63,6 @@ export interface CinetalkPost {
   /** 내 게시물일 때 공유 카드에 표시할 정보 */
   shareCard?: {
     level: number;
-    titleName: string;
     count: number;
   };
 }
@@ -71,7 +70,6 @@ export interface CinetalkPost {
 export interface LevelRule {
   level: number;
   required: number; // 누적 관람 편수
-  titleName: string; // 칭호
 }
 
 export type BadgeTier = "intro" | "fan" | "master";
