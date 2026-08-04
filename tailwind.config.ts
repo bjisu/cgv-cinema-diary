@@ -43,17 +43,12 @@ const config: Config = {
         "cgv-fab": "linear-gradient(180deg, #FF2949 0%, #FF164F 100%)",
       },
       keyframes: {
-        "scan-line": {
-          "0%": { transform: "translateY(0%)" },
-          "100%": { transform: "translateY(100%)" },
-        },
         ripple: {
           "0%": { transform: "scale(0.6)", opacity: "0.7" },
           "100%": { transform: "scale(2.2)", opacity: "0" },
         },
       },
       animation: {
-        "scan-line": "scan-line 1s ease-in-out infinite alternate",
         ripple: "ripple 1.8s ease-out infinite",
       },
     },
