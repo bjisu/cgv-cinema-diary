@@ -145,18 +145,30 @@ export default function ArchivePage() {
               </dl>
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                if (!confirm("이 기록을 삭제할까요?")) return;
-                removeEntry(selected.id);
-                setSelected(null);
-                showToast("기록을 삭제했어요");
-              }}
-              className="mt-6 h-[52px] w-full rounded-btn border border-black/10 text-[15px] font-bold text-cgv-gray-600"
-            >
-              기록 삭제
-            </button>
+            {/* 삭제 / 게시 — 각 50%, 사이 8px (PRD §7.3 버튼 높이 52px 유지) */}
+            <div className="mt-6 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!confirm("이 기록을 삭제할까요?")) return;
+                  removeEntry(selected.id);
+                  setSelected(null);
+                  showToast("기록을 삭제했어요");
+                }}
+                className="h-[52px] whitespace-nowrap rounded-btn border border-black/10 bg-cgv-white text-[15px] font-bold text-cgv-black"
+              >
+                기록 삭제
+              </button>
+              <PrimaryButton
+                onClick={() => {
+                  setSelected(null);
+                  router.push("/diary/share");
+                }}
+                className="whitespace-nowrap"
+              >
+                씨네톡에 게시
+              </PrimaryButton>
+            </div>
           </div>
         )}
       </BottomSheet>
