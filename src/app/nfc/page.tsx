@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import PaconiCharacter from "@/components/diary/PaconiCharacter";
 import MobileContainer from "@/components/layout/MobileContainer";
 import { MAX_LEVEL } from "@/data/levels";
@@ -11,26 +11,44 @@ import { useDiaryStore } from "@/store/useDiaryStore";
 
 /** PRD §8 화면 NFC — 굿즈 태그 시뮬레이션 (FR-01) */
 export default function NfcPage() {
+  return (
+    <Suspense fallback={<MobileContainer><div className="min-h-screen bg-[#1A1A1A]" /></MobileContainer>}>
+      <NfcContent />
+    </Suspense>
+  );
+}
+
+function NfcContent() {
   const router = useRouter();
+  const params = useSearchParams();
+  // 실물 NFC 태그로 들어온 진입(/nfc?from=tag)은 시뮬레이션 단계를 건너뛴다.
+  const fromTag = params.get("from") === "tag";
   const markNfcTagged = useDiaryStore((s) => s.markNfcTagged);
   const markOnboarded = useDiaryStore((s) => s.markOnboarded);
-  const [done, setDone] = useState(false);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const [done, setDone] = useState(fromTag);
 
   const succeed = useCallback(() => {
-    if (done) return;
     setDone(true);
     markNfcTagged();
     markOnboarded();
-    timers.current.push(setTimeout(() => router.replace("/diary"), 1200));
-  }, [done, markNfcTagged, markOnboarded, router]);
+  }, [markNfcTagged, markOnboarded]);
 
   useEffect(() => {
+    if (fromTag) {
+      succeed();
+      return;
+    }
     // 1.5초 후 자동 성공 (실패 케이스 없음)
-    timers.current.push(setTimeout(succeed, 1500));
-    const t = timers.current;
-    return () => t.forEach(clearTimeout);
-  }, [succeed]);
+    const t = setTimeout(succeed, 1500);
+    return () => clearTimeout(t);
+  }, [fromTag, succeed]);
+
+  // 완료 연출을 1.2초 보여준 뒤 다이어리 홈으로 이동
+  useEffect(() => {
+    if (!done) return;
+    const t = setTimeout(() => router.replace("/diary"), 1200);
+    return () => clearTimeout(t);
+  }, [done, router]);
 
   return (
     <MobileContainer>
