@@ -5,12 +5,13 @@ import Link from "next/link";
 import BottomTab from "@/components/layout/BottomTab";
 import Hydrated from "@/components/layout/Hydrated";
 import MobileContainer from "@/components/layout/MobileContainer";
-import { PaconiMiniBadge } from "@/components/diary/PaconiCharacter";
+import PaconiCharacter, { PaconiMiniBadge } from "@/components/diary/PaconiCharacter";
 import CjOneLogo from "@/components/ui/CjOneLogo";
 import GradeBar from "@/components/ui/GradeBar";
 import GrayCard from "@/components/ui/GrayCard";
 import { OutlineButton } from "@/components/ui/PrimaryButton";
 import { useToast } from "@/components/ui/Toast";
+import { MAX_LEVEL } from "@/data/levels";
 import { getLevel } from "@/lib/progression";
 import { useDiaryStore } from "@/store/useDiaryStore";
 
@@ -136,7 +137,8 @@ export default function MoreScreen() {
                 <OutlineButton>자세히보기</OutlineButton>
               </Link>
             </div>
-            <PromoPaconi />
+            {/* 프로모 배너는 사용자 레벨과 무관한 정적 일러스트 (하이드레이션 불일치 방지) */}
+            <PaconiCharacter level={MAX_LEVEL} size={72} />
             <span className="absolute right-3 top-3 rounded-full border border-cgv-red px-1.5 py-0.5 text-[9px] font-bold leading-none text-cgv-red">
               NEW
             </span>
@@ -162,35 +164,5 @@ export default function MoreScreen() {
 
       <BottomTab active="more" />
     </MobileContainer>
-  );
-}
-
-function PromoPaconi() {
-  return (
-    <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden>
-      <circle cx="46" cy="22" r="9" fill="#F5C518" />
-      <circle cx="34" cy="18" r="8" fill="#FFF6D6" />
-      <circle cx="24" cy="24" r="8" fill="#F5C518" />
-      <path d="M16 30h40l-5 32a5 5 0 0 1-5 4H26a5 5 0 0 1-5-4z" fill="#FFFFFF" />
-      <g clipPath="url(#promoCup)">
-        <rect x="21" y="30" width="6" height="38" fill="#FF2949" />
-        <rect x="33" y="30" width="6" height="38" fill="#FF2949" />
-        <rect x="45" y="30" width="6" height="38" fill="#FF2949" />
-      </g>
-      <defs>
-        <clipPath id="promoCup">
-          <path d="M16 30h40l-5 32a5 5 0 0 1-5 4H26a5 5 0 0 1-5-4z" />
-        </clipPath>
-      </defs>
-      <path
-        d="M16 30h40l-5 32a5 5 0 0 1-5 4H26a5 5 0 0 1-5-4z"
-        stroke="#121212"
-        strokeWidth="2"
-        fill="none"
-      />
-      <circle cx="30" cy="44" r="2.6" fill="#121212" />
-      <circle cx="42" cy="44" r="2.6" fill="#121212" />
-      <path d="M31 51q5 5 10 0" stroke="#121212" strokeWidth="2" strokeLinecap="round" />
-    </svg>
   );
 }

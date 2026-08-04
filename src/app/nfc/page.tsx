@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import PaconiCharacter from "@/components/diary/PaconiCharacter";
 import MobileContainer from "@/components/layout/MobileContainer";
+import { MAX_LEVEL } from "@/data/levels";
 import { useDiaryStore } from "@/store/useDiaryStore";
 
 /** PRD §8 화면 NFC — 굿즈 태그 시뮬레이션 (FR-01) */
@@ -77,28 +79,24 @@ export default function NfcPage() {
 /** 폰 뒷면 + 파코니 굿즈 일러스트 */
 function PhoneWithGoods() {
   return (
-    <svg width="150" height="180" viewBox="0 0 150 180" fill="none" aria-hidden>
-      <rect x="26" y="14" width="82" height="152" rx="14" fill="#2B2B2B" stroke="#707070" strokeWidth="2" />
-      <circle cx="45" cy="34" r="7" fill="#454545" />
-      <motion.g
+    <div className="relative h-[180px] w-[150px]" aria-hidden>
+      <svg
+        width="150"
+        height="180"
+        viewBox="0 0 150 180"
+        fill="none"
+        className="absolute inset-0"
+      >
+        <rect x="26" y="14" width="82" height="152" rx="14" fill="#2B2B2B" stroke="#707070" strokeWidth="2" />
+        <circle cx="45" cy="34" r="7" fill="#454545" />
+      </svg>
+      <motion.div
         animate={{ x: [12, 0, 12] }}
         transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[78px] top-[52px]"
       >
-        <circle cx="104" cy="104" r="26" fill="#F5C518" />
-        <path d="M92 96h24l-3 22a4 4 0 0 1-4 3.4h-10a4 4 0 0 1-4-3.4z" fill="#FFFFFF" />
-        <g clipPath="url(#nfcCup)">
-          <rect x="95" y="96" width="4" height="26" fill="#FF2949" />
-          <rect x="102" y="96" width="4" height="26" fill="#FF2949" />
-          <rect x="109" y="96" width="4" height="26" fill="#FF2949" />
-        </g>
-        <defs>
-          <clipPath id="nfcCup">
-            <path d="M92 96h24l-3 22a4 4 0 0 1-4 3.4h-10a4 4 0 0 1-4-3.4z" />
-          </clipPath>
-        </defs>
-        <circle cx="100" cy="106" r="1.8" fill="#121212" />
-        <circle cx="108" cy="106" r="1.8" fill="#121212" />
-      </motion.g>
-    </svg>
+        <PaconiCharacter level={MAX_LEVEL} size={52} />
+      </motion.div>
+    </div>
   );
 }

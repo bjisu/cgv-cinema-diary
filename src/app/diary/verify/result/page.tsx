@@ -3,6 +3,7 @@
 import { ChevronDown, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import PaconiCharacter from "@/components/diary/PaconiCharacter";
 import AppHeader from "@/components/layout/AppHeader";
 import Hydrated from "@/components/layout/Hydrated";
 import MobileContainer from "@/components/layout/MobileContainer";
@@ -11,6 +12,7 @@ import Poster from "@/components/ui/Poster";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 import { useToast } from "@/components/ui/Toast";
 import { GENRES } from "@/data/badges";
+import { MAX_LEVEL } from "@/data/levels";
 import { MOVIES, getMovie } from "@/data/movies";
 import { fromDateTimeInput } from "@/lib/format";
 import { getLevel, getNewlyUnlockedBadges } from "@/lib/progression";
@@ -135,7 +137,7 @@ export default function VerifyResultPage() {
 
         {/* 파코니 말풍선 */}
         <div className="flex items-center gap-3 px-5 pt-2">
-          <MiniPaconi />
+          <PaconiCharacter level={MAX_LEVEL} size={44} />
           <p className="rounded-card rounded-bl-[4px] bg-cgv-gray-100 px-4 py-3 text-body text-cgv-black">
             {auto ? "자동으로 기입했어! 저장할까? 🍿" : "직접 기록해줘! 🍿"}
           </p>
@@ -334,33 +336,5 @@ function TextInput({
       placeholder={placeholder}
       className="h-[52px] w-full rounded-btn border border-black/10 px-3 text-body text-cgv-black placeholder:text-cgv-gray-400"
     />
-  );
-}
-
-function MiniPaconi() {
-  return (
-    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden className="shrink-0">
-      <circle cx="16" cy="13" r="6" fill="#F5C518" />
-      <circle cx="26" cy="12" r="6" fill="#FFF6D6" />
-      <path d="M9 19h26l-3 20a4 4 0 0 1-4 3.4H16a4 4 0 0 1-4-3.4z" fill="#FFFFFF" />
-      <g clipPath="url(#miniCup)">
-        <rect x="13" y="19" width="4" height="24" fill="#FF2949" />
-        <rect x="21" y="19" width="4" height="24" fill="#FF2949" />
-        <rect x="29" y="19" width="4" height="24" fill="#FF2949" />
-      </g>
-      <defs>
-        <clipPath id="miniCup">
-          <path d="M9 19h26l-3 20a4 4 0 0 1-4 3.4H16a4 4 0 0 1-4-3.4z" />
-        </clipPath>
-      </defs>
-      <path
-        d="M9 19h26l-3 20a4 4 0 0 1-4 3.4H16a4 4 0 0 1-4-3.4z"
-        stroke="#121212"
-        strokeWidth="1.8"
-        fill="none"
-      />
-      <circle cx="18" cy="28" r="1.8" fill="#121212" />
-      <circle cx="26" cy="28" r="1.8" fill="#121212" />
-    </svg>
   );
 }

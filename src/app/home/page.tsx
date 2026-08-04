@@ -2,10 +2,12 @@
 
 import { Bell, Search, Ticket } from "lucide-react";
 import Link from "next/link";
+import PaconiCharacter from "@/components/diary/PaconiCharacter";
 import BottomTab from "@/components/layout/BottomTab";
 import MobileContainer from "@/components/layout/MobileContainer";
 import Poster from "@/components/ui/Poster";
 import { OutlineButton } from "@/components/ui/PrimaryButton";
+import { MAX_LEVEL } from "@/data/levels";
 import { MOVIES } from "@/data/movies";
 
 /** 목업 탭 — 홈 (FR-11). 빈 화면 금지: 배너 + 무비차트 가로 스크롤 */
@@ -39,7 +41,7 @@ export default function HomePage() {
                   <OutlineButton>시네마 다이어리 열기</OutlineButton>
                 </div>
               </div>
-              <span className="text-[44px]">🍿</span>
+              <PaconiCharacter level={MAX_LEVEL} size={64} />
             </div>
           </Link>
         </div>

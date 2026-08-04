@@ -23,7 +23,7 @@ export default function OnboardingPage() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <PaconiCharacter level={1} size={180} />
+          <PaconiCharacter level={1} size={180} priority />
         </motion.div>
 
         <h1 className="mt-8 text-center text-[24px] font-bold leading-snug text-cgv-black">
