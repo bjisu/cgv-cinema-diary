@@ -7,9 +7,9 @@ import { MOVIES } from "@/data/movies";
 import { getEarnedBadgeIds } from "@/lib/progression";
 import type { CinetalkPost, DiaryEntry } from "@/types";
 
-export const STORAGE_KEY = "cgv-cinema-diary";
+const STORAGE_KEY = "cgv-cinema-diary";
 
-export interface DiaryState {
+interface DiaryState {
   nickname: string;
   cjGrade: "일반";
   points: number;

@@ -12,7 +12,7 @@ export const GENRES: Genre[] = [
 ];
 
 /** PRD §5.2 — 장르 뱃지 티어 */
-export const TIERS: { tier: BadgeTier; required: number; label: string }[] = [
+const TIERS: { tier: BadgeTier; required: number; label: string }[] = [
   { tier: "intro", required: 1, label: "입문" },
   { tier: "fan", required: 3, label: "팬" },
   { tier: "master", required: 7, label: "마스터" },

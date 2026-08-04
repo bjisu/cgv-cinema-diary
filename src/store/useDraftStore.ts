@@ -4,7 +4,7 @@ import { create } from "zustand";
 import type { EntrySource, Genre } from "@/types";
 
 /** /diary/verify → /diary/verify/result 로 넘기는 임시 입력값 (저장 전이므로 persist 안 함) */
-export interface Draft {
+interface Draft {
   movieId: string;
   date: string; // yyyy-mm-dd
   time: string; // HH:mm

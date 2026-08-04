@@ -23,7 +23,7 @@ const TIER_STYLE: Record<BadgeTier, { ring: string; chip: string; label: string 
   master: { ring: "ring-cgv-gold", chip: "bg-cgv-gold", label: "마스터" },
 };
 
-export function getBadgeImageSrc(genre: Genre): string {
+function getBadgeImageSrc(genre: Genre): string {
   return `/badges/${GENRE_IMAGE[genre]}.png`;
 }
 
